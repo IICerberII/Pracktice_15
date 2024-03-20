@@ -25,6 +25,7 @@ namespace WpfApp1
 
             dateToDo.SelectedDate = new DateTime(2024, 01, 10);
             descriptionToDo.Text = "Описания нет";
+
         }
 
         private void descriptionToDo_TextChanged(object sender, TextChangedEventArgs e)
@@ -40,11 +41,14 @@ namespace WpfApp1
 
             DateTime dueDate = selectedDate ?? DateTime.Now;
             string Description = descriptionToDo.Text;
+            Boolean Doing = false;
 
             MainWindow window = (MainWindow)this.Owner;
-            window.strList.Add(new ToDo(Name, Description, dueDate));
+            window.strList.Add(new ToDo(Name, Description, dueDate, Doing));
+
             window.DataGridProduct.ItemsSource = null;
             window.DataGridProduct.ItemsSource = window.strList;
+            window.EndToDo();
 
 
             titleToDo.Text = "";

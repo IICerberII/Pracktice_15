@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400" ResizeMode="NoResize" Icon="image/icon.png">
+        Title="Список дел" Height="450" Width="400" ResizeMode="NoResize" Icon="image/icon.png">
     <Window.Resources>
         <Style x:Key="DataGridStyle" TargetType="DataGrid">
             <Setter Property="AutoGenerateColumns" Value="False" />
@@ -15,6 +15,7 @@
             <Setter Property="RowBackground" Value="White" />
             <Setter Property="AlternatingRowBackground" Value="#FFFDFAF1" />
             <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#5EBEC4"/>
         </Style>
     </Window.Resources>    
     <Grid Background="#FFFDFAF1" ShowGridLines="False" >
@@ -32,7 +33,13 @@
         <DataGrid Grid.Row="1" Background="#FDF5DF" Margin="10" HorizontalAlignment="Stretch" Name="DataGridProduct"
                    ItemsSource="{Binding}" Style="{StaticResource DataGridStyle}">
             <DataGrid.Columns>
-            <DataGridCheckBoxColumn />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked ="{Binding Path=Doing}" Checked="CheckBox_Checked" Unchecked="CheckBox_UnChecked"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Width="2*"  Binding="{Binding Path=Title}"></DataGridTextColumn>
                 <DataGridTextColumn Width="1*" Binding="{Binding Path=DueDate, StringFormat=dd.MM.yyyy}"></DataGridTextColumn>
             <DataGridTemplateColumn>
@@ -41,7 +48,7 @@
                             <Button Click="Button_Click" Background="#5EBEC4">
                                 <Image Source="Image/Delete.png" Width="10pt" Height="10pt" />
                             </Button>
-                        </DataTemplate>
+                    </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>                
             </DataGrid.Columns>
@@ -57,7 +64,8 @@
                 Name="buttonAdd" ToolTip="При добавлении дела появится в списке слева, и его придется выполнить" Click="buttonAdd_Click" Style="{StaticResource ButtonStyle}" >
             <Image Source="image/add.png" Height="20pt" Width="20pt" />
         </Button>
-        <ProgressBar Grid.Row="2" MinHeight="30" ValueChanged="ProgressBar_ValueChanged"/>
+        <ProgressBar Style="{StaticResource ProgressBarStyle}" Grid.Row="2" MinHeight="20" Name="ProgressBarView" Margin="5"/>
+        <TextBlock Name="TextProgressBar" Grid.Row="2" MinHeight="20" Margin="5" HorizontalAlignment="Center" Padding="5,5"/>
     </Grid>
 
 

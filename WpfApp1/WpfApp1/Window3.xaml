@@ -5,7 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Window3" Height="450" Width="400" ResizeMode="NoResize" Icon="image/icon.png">
+        Title="Добавление нового дела" Height="450" Width="400" ResizeMode="NoResize" Icon="image/icon.png">
+    <Window.Resources>
+        <Style x:Key="CalendarStyle" TargetType="DatePicker">
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="BorderBrush" Value="#5EBEC4"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="SelectedDateFormat" Value="Long"/>
+            <Setter Property="CalendarStyle">
+                <Setter.Value>
+                    <Style TargetType="Calendar">
+                        <Setter Property="BorderThickness" Value="1.5"/>
+                        <Setter Property="BorderBrush" Value="#5EBEC4"/>
+                        <Setter Property="Background" Value="#FFFDFAF1"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+
+
+        </Style>
+    </Window.Resources>
     <Grid Background="#FFFDFAF1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
@@ -18,7 +38,7 @@
                         <TextBlock> Название:</TextBlock>
                         <TextBox Name="titleToDo" Style="{StaticResource TextBoxStyle}"></TextBox>
                         <TextBlock> Выполнить до:</TextBlock>
-                        <DatePicker Name="dateToDo"></DatePicker>
+                        <DatePicker Name="dateToDo" Style="{StaticResource CalendarStyle}"></DatePicker>
                         <TextBlock>Описание:</TextBlock>
                         <TextBox Style="{StaticResource TextBoxStyle}" MinLines="10" MaxLines="10" AcceptsReturn="True" AcceptsTab="True"
                                  Name="descriptionToDo" TextChanged="descriptionToDo_TextChanged"></TextBox>

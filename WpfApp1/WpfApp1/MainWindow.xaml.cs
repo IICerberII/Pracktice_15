@@ -20,47 +20,96 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-       internal List<ToDo> strList { get; set; }
+        internal List<ToDo> strList { get; set; }
 
-        
+
         public MainWindow()
         {
             InitializeComponent();
             strList = new List<ToDo>();
+
+            strList.Add(new ToDo("Приготовить покушать", "Нет описания", new DateTime(2024, 01, 15), (false)));
+            strList.Add(new ToDo("Поработать", "Съездить на совещание в Москву", new DateTime(2024, 01, 20), (false)));
+            strList.Add(new ToDo("Отдохнуть", "Съездить в отпуск в Сочи", new DateTime(2024, 02, 01), (false)));
             DataGridProduct.ItemsSource = strList;
-            strList.Add(new ToDo("Приготовить покушать", "Нет описания", new DateTime (2024, 01, 15)));
-            strList.Add(new ToDo("Поработать", "Съездить на совещание в Москву", new DateTime(2024, 01, 20)));
-            strList.Add(new ToDo("Отдохнуть", "Съездить в отпуск в Сочи", new DateTime(2024, 02, 01)));
-            
+            EndToDo();
+
         }
 
-        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+
+    private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             Window3 window3 = new Window3();
             window3.Owner = this;
             window3.Show();
+            EndToDo();
         }
 
-             private void Button_Click(object sender, RoutedEventArgs e)
-             {
-                 if (DataGridProduct.SelectedItem != null)
-                 {
-                     var selecteditem = DataGridProduct.SelectedItem as ToDo;
-
-                     if (selecteditem != null)
-                     {
-                         strList.Remove(selecteditem);
-
-                         DataGridProduct.ItemsSource = null;
-                         DataGridProduct.ItemsSource = strList;
-
-                     }
-                 }
-             }
-
-        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-             
+            
+            if (DataGridProduct.SelectedItem != null)
+            {
+                var selecteditem = DataGridProduct.SelectedItem as ToDo;
+
+                if (selecteditem != null)
+                {
+                    strList.Remove(selecteditem);
+
+                    DataGridProduct.ItemsSource = null;
+                    DataGridProduct.ItemsSource = strList;
+                }
+            }
+            EndToDo();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+
+            ToDo selecteditem =(sender as CheckBox).DataContext as ToDo;
+            if (selecteditem.Doing != true || selecteditem != null)
+            {
+                selecteditem.Doing = true;
+                EndToDo();                
+            }
+
+
+        }
+
+        private void CheckBox_UnChecked(object sender, RoutedEventArgs e)
+        {
+            ToDo selecteditem = (sender as CheckBox).DataContext as ToDo;
+            if (selecteditem.Doing != true || selecteditem != null)
+            {
+                selecteditem.Doing = false;
+                EndToDo();              
+            }            
+
+
+        }
+
+        public void EndToDo()
+        {
+            ProgressBarView.Minimum = 0;
+            int completed = 0;
+            
+                int totalTask = strList.Count;
+                ProgressBarView.Maximum = totalTask;
+
+                foreach (ToDo i in strList)
+                {
+                    if (i.Doing)
+                    {
+                        completed++;
+                    }
+                }
+
+                ProgressBarView.Value = completed;
+                TextProgressBar.Text = $"{completed}/{totalTask}";
+            
         }
     }
+
+
 }

@@ -21,5 +21,9 @@
             <Setter Property="Control.FontWeight" Value="Bold"/>
             <Setter Property="Control.Foreground" Value="#5EBEC4"/>
         </Style>
+        <Style TargetType="ProgressBar" x:Key="ProgressBarStyle">
+            <Setter Property="ProgressBar.Background" Value="#FDF5DF"/>
+            <Setter Property="ProgressBar.Foreground" Value="#5EBEC4"/>
+        </Style>
     </Application.Resources>
 </Application>
